@@ -20,5 +20,14 @@ return {
   { import = "astrocommunity.recipes.picker-lsp-mappings" },
   { import = "astrocommunity.utility.lua-json5" },
   { import = "astrocommunity.colorscheme.catppuccin" },
+  { import = "astrocommunity.quickfix.nvim-bqf" },
+  { import = "astrocommunity.editing-support.comment-box-nvim" },
+  { import = "astrocommunity.editing-support.hypersonic-nvim" },
+  { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
+  { import = "astrocommunity.editing-support.todo-comments-nvim" },
+  -- { import = "astrocommunity.editing-support.nvim-origami" },
+  { import = "astrocommunity.editing-support.nvim-treesitter-context" },
+  { import = "astrocommunity.markdown-and-latex.markview-nvim" },
+  { import = "astrocommunity.recipes.neovide" },
   -- import/override with your plugins folder
 }

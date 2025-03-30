@@ -2,11 +2,15 @@ return {
   "zbirenbaum/copilot.lua",
   cmd = "Copilot",
   build = ":Copilot auth",
-  event = "BufReadPost",
+  event = "InsertEnter",
   opts = {
     suggestion = {
+      enabled = true,
+      auto_trigger = true,
+      hide_during_completion = true,
+      debounce = 75,
       keymap = {
-        accept = false, -- handled by completion engine
+        accept = false,
       },
     },
   },
