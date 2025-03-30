@@ -11,7 +11,7 @@ return {
         -- configure font
         guifont = "FiraCode Nerd Font:h15",
         -- line spacing
-        linespace = 25,
+        linespace = 20,
       },
       g = { -- configure vim.g variables
         -- configure scaling
