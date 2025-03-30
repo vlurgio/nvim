@@ -22,7 +22,7 @@ return {
   { import = "astrocommunity.quickfix.nvim-bqf" },
   { import = "astrocommunity.editing-support.comment-box-nvim" },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },
-  { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
+  -- { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   -- { import = "astrocommunity.editing-support.nvim-origami" },
   { import = "astrocommunity.editing-support.nvim-treesitter-context" },
