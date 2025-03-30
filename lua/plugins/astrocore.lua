@@ -81,6 +81,10 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
+        ["<Leader>fp"] = {
+          function() require("snacks").picker.projects { dev = { "~/projects/go", "~/projects/nodesjs" } } end,
+          desc = "Find projects",
+        },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
