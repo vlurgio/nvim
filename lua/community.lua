@@ -12,7 +12,6 @@ return {
   { import = "astrocommunity.pack.yaml" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.code-runner.overseer-nvim" },
-  { import = "astrocommunity.debugging.nvim-dap-view" },
   { import = "astrocommunity.test.neotest" },
   { import = "astrocommunity.utility.noice-nvim" },
   { import = "astrocommunity.recipes.ai" },
