@@ -17,6 +17,11 @@ return {
       cmd = {
         adapater = "copilot",
       },
+      display = {
+        diff = {
+          provider = "mini_diff",
+        },
+      },
     },
   },
 }
