@@ -69,24 +69,48 @@ return {
         -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
-
-        -- mappings seen under group name "Buffer"
-        ["<Leader>bd"] = {
-          function()
-            require("astroui.status.heirline").buffer_picker(
-              function(bufnr) require("astrocore.buffer").close(bufnr) end
-            )
-          end,
-          desc = "Close buffer from tabline",
+        ["<leader>bb"] = {
+          function() require("snacks").picker.buffers() end,
+          desc = "Search Buffers",
         },
-        ["<Leader>fp"] = {
-          function() require("snacks").picker.projects { dev = { "~/projects/go", "~/projects/nodesjs" } } end,
+        ["<leader>bd"] = {
+          "<CMD>bd<CR>",
+          desc = "Delete buffer",
+        },
+        ["<Leader>pp"] = {
+          function()
+            require("snacks").picker.projects {
+              dev = { "~/projects/go", "~/projects/nodesjs" },
+              win = {
+                input = {
+                  keys = {
+                    ["<c-t>"] = {
+                      function(picker)
+                        vim.cmd "tabnew"
+                        require("snacks").notify "New tab opened"
+                        picker:close()
+                        require("snacks").picker.files()
+                      end,
+                      mode = { "n", "i" },
+                    },
+                  },
+                },
+              },
+            }
+          end,
           desc = "Find projects",
         },
         ["<Leader>."] = {
           function() require("snacks").scratch() end,
-          desc = "Find projects",
+          desc = "Open scratch buffer",
         },
+        -- windows
+        ["<leader>wd"] = {
+          "<CMD>wincmd q<CR>",
+          desc = "Window delete",
+        },
+
+        -- search
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
