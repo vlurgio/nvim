@@ -16,3 +16,5 @@
 -- }
 
 vim.diagnostic.config { virtual_lines = { current_line = true }, virtual_text = false }
+vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
+vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })

@@ -62,18 +62,14 @@ return {
     -- Mappings can be configured through AstroCore as well.
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     mappings = {
-      -- first key is the mode
       n = {
-        -- second key is the lefthand side of the map
-
-        -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
-        ["<leader>bb"] = {
-          function() require("snacks").picker.buffers() end,
+        ["<Leader>bb"] = {
+          function() require("snacks").picker.buffers { filter = { cwd = true } } end,
           desc = "Search Buffers",
         },
-        ["<leader>bd"] = {
+        ["<Leader>bd"] = {
           "<CMD>bd<CR>",
           desc = "Delete buffer",
         },
@@ -81,21 +77,33 @@ return {
           function()
             require("snacks").picker.projects {
               dev = { "~/projects/go", "~/projects/nodesjs" },
-              win = {
-                input = {
-                  keys = {
-                    ["<c-t>"] = {
-                      function(picker)
-                        vim.cmd "tabnew"
-                        require("snacks").notify "New tab opened"
-                        picker:close()
-                        require("snacks").picker.files()
-                      end,
-                      mode = { "n", "i" },
-                    },
-                  },
-                },
-              },
+              confirm = function(picker, item)
+                picker:close()
+                if item and item.file then
+                  -- Check if the project is already open by checking the cwd of each tab
+                  local tabpages = vim.api.nvim_list_tabpages()
+                  for _, tabpage in ipairs(tabpages) do
+                    local tab_cwd = vim.fn.getcwd(-1, tabpage)
+                    if tab_cwd == item.file then
+                      -- Change to the tab
+                      vim.api.nvim_set_current_tabpage(tabpage)
+                      return
+                    end
+                  end
+
+                  -- If there are already opened buffers, open a new tab
+                  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+                    if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_buf_get_name(bufnr) ~= "" then
+                      vim.cmd "tabnew"
+                      break
+                    end
+                  end
+
+                  -- Change cwd to the selected project, only for this tab
+                  vim.cmd("tcd " .. vim.fn.fnameescape(item.file))
+                  require("snacks").picker.smart()
+                end
+              end,
             }
           end,
           desc = "Find projects",
@@ -105,19 +113,30 @@ return {
           desc = "Open scratch buffer",
         },
         -- windows
-        ["<leader>wd"] = {
+        ["<Leader>wd"] = {
           "<CMD>wincmd q<CR>",
           desc = "Window delete",
         },
-
-        -- search
-
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
-
-        -- setting a mapping to false will disable it
-        -- ["<C-S>"] = false,
+        ["<Leader>ls"] = {
+          function() require("snacks").picker.lsp_symbols { layout = { preset = "vscode", preview = "main" } } end,
+          desc = "LSP symbols",
+        },
+        ["<Leader>lS"] = {
+          function() require("snacks").picker.lsp_workspace_symbols() end,
+          desc = "LSP symbols",
+        },
+        ["<Leader>lR"] = {
+          function() require("snacks").picker.lsp_references() end,
+          desc = "LSP references",
+        },
+        ["gr"] = {
+          function() require("snacks").picker.lsp_references() end,
+          desc = "LSP references",
+        },
+        ["gi"] = {
+          function() require("snacks").picker.lsp_implementations() end,
+          desc = "LSP references",
+        },
       },
     },
   },
