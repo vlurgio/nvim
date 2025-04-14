@@ -52,6 +52,7 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
+        tabstop = 4,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -137,6 +138,80 @@ return {
           function() require("snacks").picker.lsp_implementations() end,
           desc = "LSP references",
         },
+        -- ["<Leader>mi"] = {
+        --   function()
+        --     local ts_utils = require "nvim-treesitter.ts_utils"
+        --
+        --     local function is_struct_node()
+        --       local tsnode = ts_utils.get_node_at_cursor()
+        --       if
+        --         tsnode:type() ~= "type_identifier"
+        --         or tsnode:parent():type() ~= "type_spec"
+        --         or tsnode:parent():parent():type() ~= "type_declaration"
+        --       then
+        --         return false
+        --       end
+        --       return true
+        --     end
+        --
+        --     if not is_struct_node() then
+        --       print "Current node is not a struct"
+        --       return
+        --     end
+        --
+        --     -- get class name from the current node
+        --     local class_name = ts_utils.get_node_text(ts_utils.get_node_at_cursor(), 0)[1]
+        --     -- get folder name of currnet buffer
+        --     local package_name = vim.fn.fnamemodify(vim.fn.expand "%:p", ":h:t")
+        --     require("snacks").picker.lsp_workspace_symbols {
+        --       layout = {
+        --         preset = "vscode",
+        --         preview = "main",
+        --       },
+        --       filter = {
+        --         type = { "interface" },
+        --       },
+        --       confirm = function(picker, item)
+        --         picker:close()
+        --         if item and item.file then
+        --           -- split item.text
+        --           local item_text = item.text
+        --           local words = {}
+        --           for word in item_text:gmatch "%w+" do
+        --             table.insert(words, word)
+        --           end
+        --           local interface_name = words[2] or "" -- Ensure a default value in case words[1] is nil
+        --           -- Get the interface package name from the first line in item.file
+        --           local interface_package_name
+        --           local file = io.open(item.file, "r")
+        --           while file:read "*l" do
+        --             -- Read the first line of the file
+        --             local first_line = file:read "*l"
+        --             local match = first_line:match "package (%w+)"
+        --             if match then
+        --               -- Notify the user with the first line
+        --               interface_package_name = match
+        --               break
+        --             end
+        --           end
+        --           file:close()
+        --           -- Now we run goimpl to generate the implementation
+        --           local command = string.format(
+        --             "goimpl '%s.%s' '*%s.%s'",
+        --             interface_package_name,
+        --             interface_name,
+        --             package_name,
+        --             class_name
+        --           )
+        --           -- run the command
+        --           print(command)
+        --           local handle = io.popen(command)
+        --         end
+        --       end,
+        --     }
+        --   end,
+        --   desc = "LSP symbols",
+        -- },
       },
     },
   },
